@@ -1,4 +1,4 @@
-let noteForm;
+ let noteForm;
 let noteTitle;
 let noteText;
 let saveNoteBtn;

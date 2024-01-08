@@ -7,11 +7,11 @@ const app = express();
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'viewa/index.html'));
+    res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
 
 
 app.listen(PORT, () => {
-    console.log('Example app listening at http://localhost:${PORT}');
+    console.log(`Example app listening at http://localhost:${PORT}`);
 });
