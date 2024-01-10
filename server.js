@@ -17,7 +17,13 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/index.html'));
 });
 
-// app.get('/api/dataBase', (req, res) => res.json(dataBase));
+//GET request for notes
+app.get('/api/notes', (req, res) => {
+    //send message to client
+    res.json(`${req.method} request received to get notes`);
+//log our request to the terminal 
+    console.info(`${req.method} request received to get notes`);
+});
  
 
 
