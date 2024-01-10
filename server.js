@@ -6,7 +6,7 @@ const fs = require('fs');
 const PORT = process.env.PORT ?? 3001;
 const app = express();
 
-//added middleware
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -20,15 +20,14 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views/notes.html'));
 });
 
-//GET request for notes
+
 app.get('/api/notes', (req, res) => {  
-    //send message to client 
     const data = (fs.readFileSync('./db/db.json', 'utf-8'));
     const notes = data ? JSON.parse(data) : [];
     res.json(notes);
 });
 
-//POST request to add a note
+
 app.post('/api/notes', (req, res) => {
     const data = (fs.readFileSync('./db/db.json', 'utf-8'));
     const notes = data ? JSON.parse(data) : [];
