@@ -3,14 +3,12 @@ const path = require('path');
 const fs = require('fs');
 
 
-const PORT = process.env.PORT ?? 3001; 
-
-
+const PORT = process.env.PORT ?? 3001;
 const app = express();
 
-
+//added middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
@@ -23,16 +21,22 @@ app.get('/', (req, res) => {
 });
 
 //GET request for notes
-app.get('/api/notes', (req, res) => {
-    //send message to client
-    res.json(`${req.method} request received to get notes`);
-//log our request to the terminal 
-    console.info(`${req.method} request received to get notes`);
+app.get('/api/notes', (req, res) => {  
+    //send message to client 
+    const data = (fs.readFileSync('./db/db.json', 'utf-8'));
+    const notes = data ? JSON.parse(data) : [];
+    res.json(notes);
 });
- //post request to add a note
+
+//POST request to add a note
 app.post('/api/notes', (req, res) => {
-    //Log that a POST request was received
-    console.info(`${req.method} request received to add a new note`);
+    const data = (fs.readFileSync('./db/db.json', 'utf-8'));
+    const notes = data ? JSON.parse(data) : [];
+    notes.push(req.body);
+    const notesStr = JSON.stringify(notes, null, 2);
+    fs.writeFileSync('./db/db.json', notesStr);
+        res.json(req.body);
+   
 });
 
 app.listen(PORT, () => {
